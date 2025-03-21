@@ -1,5 +1,6 @@
 # MCP-PDF2MD
 
+[![smithery badge](https://smithery.ai/badge/@FutureUnreal/mcp-pdf2md)](https://smithery.ai/server/@FutureUnreal/mcp-pdf2md)
 [English](#pdf2md-service) | [中文](README_CN.md)
 
 # MCP-PDF2MD Service
