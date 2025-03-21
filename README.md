@@ -80,14 +80,14 @@ Add the following configuration in Claude Desktop:
             "command": "uv",
             "args": [
                 "--directory",
-                "C:\\path\\to\\mcp-pdf2md",  # Replace with actual path
+                "C:\\path\\to\\mcp-pdf2md",
                 "run",
                 "pdf2md",
                 "--output-dir",
-                "C:\\path\\to\\output"  # Optional, specify output directory
+                "C:\\path\\to\\output"
             ],
             "env": {
-                "MINERU_API_KEY": "your_api_key_here"  # Replace with your API key
+                "MINERU_API_KEY": "your_api_key_here"
             }
         }
     }
@@ -102,14 +102,14 @@ Add the following configuration in Claude Desktop:
             "command": "uv",
             "args": [
                 "--directory",
-                "/path/to/mcp-pdf2md",  # Replace with actual path
+                "/path/to/mcp-pdf2md",
                 "run",
                 "pdf2md",
                 "--output-dir",
-                "/path/to/output"  # Optional, specify output directory
+                "/path/to/output"
             ],
             "env": {
-                "MINERU_API_KEY": "your_api_key_here"  # Replace with your API key
+                "MINERU_API_KEY": "your_api_key_here"
             }
         }
     }

@@ -70,14 +70,14 @@
             "command": "uv",
             "args": [
                 "--directory",
-                "C:\\path\\to\\mcp-pdf2md",  # 替换为实际路径
+                "C:\\path\\to\\mcp-pdf2md",
                 "run",
                 "pdf2md",
                 "--output-dir",
-                "C:\\path\\to\\output"  # 可选，指定输出目录
+                "C:\\path\\to\\output"
             ],
             "env": {
-                "MINERU_API_KEY": "your_api_key_here"  # 替换为您的API密钥
+                "MINERU_API_KEY": "your_api_key_here"
             }
         }
     }
@@ -92,14 +92,14 @@
             "command": "uv",
             "args": [
                 "--directory",
-                "/path/to/mcp-pdf2md",  # 替换为实际路径
+                "/path/to/mcp-pdf2md",
                 "run",
                 "pdf2md",
                 "--output-dir",
-                "/path/to/output"  # 可选，指定输出目录
+                "/path/to/output"
             ],
             "env": {
-                "MINERU_API_KEY": "your_api_key_here"  # 替换为您的API密钥
+                "MINERU_API_KEY": "your_api_key_here"
             }
         }
     }

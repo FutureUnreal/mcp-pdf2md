@@ -387,7 +387,7 @@ async def convert_pdf_url(url: str, enable_ocr: bool = True) -> Dict[str, Any]:
 @mcp.tool()  
 async def convert_pdf_file(file_path: str, enable_ocr: bool = True) -> Dict[str, Any]:
     """
-    Convert local PDF file to Markdown, supports single file or file list
+    Convert local PDF file to Markdown, supports single or multiple file paths
     
     Args:
         file_path: PDF file local path or path list, can be separated by spaces, commas, or newlines
@@ -602,8 +602,25 @@ C:/Documents/doc2.pdf
 Successful conversion returns a dictionary containing conversion result information, and the converted Markdown files will be saved in the specified output directory, with temporary downloaded ZIP files automatically deleted after unzipping to save space.
 """
 
-if __name__ == "__main__":
-    if not MINERU_API_KEY:
-        print("Warning: API key not set, please set environment variable MINERU_API_KEY")
+async def main():
+    """Run the MCP server for PDF to Markdown conversion."""
+    import argparse
     
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="PDF to Markdown Conversion Service")
+    parser.add_argument("--output-dir", default="./downloads", help="Specify output directory path, default is ./downloads")
+    args = parser.parse_args()
+    
+    # Set output directory
+    set_output_dir(args.output_dir)
+    
+    # Check API key
+    if not MINERU_API_KEY:
+        logger.warning("Warning: API key not set, please set the MINERU_API_KEY environment variable")
+    
+    # Run MCP server
     mcp.run()
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
