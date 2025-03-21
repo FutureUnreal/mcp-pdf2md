@@ -1,5 +1,5 @@
 """
-PDF到Markdown转换服务启动脚本
+PDF to Markdown Conversion Service Startup Script
 """
 import asyncio
 from . import main
