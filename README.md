@@ -9,11 +9,16 @@ An MCP-based high-performance PDF to Markdown conversion service powered by Mine
 ## Key Features
 
 - Format Conversion: Convert PDF files to structured Markdown format.
-- Multiple Sources: Process local PDF files and URL links.
+- Multi-source Support: Process both local PDF files and URL links.
 - Intelligent Processing: Automatically select the best processing method.
-- Batch Processing: Support for multiple file batch conversion, allowing for efficient processing of large volumes of PDF files.
-- OCR Support: Optional OCR to improve recognition rate.
+- Batch Processing: Support multi-file batch conversion for efficient handling of large volumes of PDF files.
 - MCP Integration: Seamless integration with LLM clients like Claude Desktop.
+- Structure Preservation: Maintain the original document structure, including headings, paragraphs, lists, etc.
+- Smart Layout: Output text in human-readable order, suitable for single-column, multi-column, and complex layouts.
+- Formula Conversion: Automatically recognize and convert formulas in the document to LaTeX format.
+- Table Extraction: Automatically recognize and convert tables in the document to structured format.
+- Cleanup Optimization: Remove headers, footers, footnotes, page numbers, etc., to ensure semantic coherence.
+- High-Quality Extraction: High-quality extraction of text, images, and layout information from PDF documents.
 
 ## System Requirements
 
@@ -136,6 +141,14 @@ This project relies on the MinerU API for PDF content extraction. To obtain an A
 6. Use this string as the value for `MINERU_API_KEY`
 
 Note that access to the MinerU API is currently in testing phase and requires approval from the MinerU team. The approval process may take some time, so plan accordingly.
+
+## Demo
+
+### Input PDF
+![Input PDF](images/input.png)
+
+### Output Markdown
+![Output Markdown](images/output.png)
 
 ## License
 
