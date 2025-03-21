@@ -3,19 +3,23 @@ name = "pdf2md"
 version = "0.1.0"
 description = "PDF转Markdown MCP服务器"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 dependencies = [
     "httpx>=0.28.1",
-    "mcp>=1.4.1",
+    "mcp[cli]>=1.4.1",
     "python-dotenv>=1.0.0",
     "asyncio>=3.4.3",
     "pathlib>=1.0.1",
+    "typer>=0.9.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
 ]
+
+[project.scripts]
+pdf2md = "pdf2md:main"
 
 [build-system]
 requires = ["setuptools>=61.0"]

@@ -1,29 +1,25 @@
-from .server import serve
-
+from .server import mcp
 
 def main():
     """PDF到Markdown转换服务 - 提供PDF文件转换为Markdown的MCP服务"""
-    import argparse
-    import asyncio
     import os
-    from dotenv import load_dotenv
+    import argparse
     
-    # 加载环境变量
-    load_dotenv()
-    
-    parser = argparse.ArgumentParser(
-        description="提供PDF文件转换为Markdown的MCP服务"
-    )
-    parser.add_argument("--api-key", type=str, help="Mineru API密钥")
-    
+    # 解析命令行参数
+    parser = argparse.ArgumentParser(description="PDF到Markdown转换服务")
+    parser.add_argument("--output-dir", default="./downloads", help="指定输出目录路径，默认为./downloads")
     args = parser.parse_args()
     
-    # 如果命令行提供了API密钥，则使用它
-    if args.api_key:
-        os.environ["MINERU_API_KEY"] = args.api_key
+    # 设置输出目录
+    from .server import set_output_dir
+    set_output_dir(args.output_dir)
     
-    asyncio.run(serve())
+    # 检查API密钥
+    from .server import MINERU_API_KEY, logger
+    if not MINERU_API_KEY:
+        logger.warning("警告: 未设置API密钥，请设置环境变量MINERU_API_KEY")
+    
+    # 运行MCP服务器
+    mcp.run()
 
-
-if __name__ == "__main__":
-    main()
+__all__ = ['main']
