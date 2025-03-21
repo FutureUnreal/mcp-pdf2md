@@ -18,11 +18,6 @@ An MCP-based high-performance PDF to Markdown conversion service powered by Mine
 ## System Requirements
 
 - Software: Python 3.10+
-- Dependencies:
-  - httpx
-  - mcp[cli]
-  - python-dotenv
-  - typer
 
 ## Quick Start
 

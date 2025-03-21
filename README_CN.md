@@ -14,11 +14,6 @@
 ## 系统要求
 
 - 软件：Python 3.10+
-- 依赖：
-  - httpx
-  - mcp[cli]
-  - python-dotenv
-  - typer
 
 ## 快速开始
 
