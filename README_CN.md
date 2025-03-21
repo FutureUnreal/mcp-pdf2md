@@ -46,7 +46,7 @@
    MINERU_API_BASE=https://mineru.net/api/v4/extract/task
    MINERU_BATCH_API=https://mineru.net/api/v4/extract/task/batch
    MINERU_BATCH_RESULTS_API=https://mineru.net/api/v4/extract-results/batch
-   MINERU_API_KEY=Bearer your_api_key_here
+   MINERU_API_KEY=your_api_key_here
    ```
 
 4. 启动服务：
@@ -73,7 +73,7 @@
                 "C:\\path\\to\\output"  # 可选，指定输出目录
             ],
             "env": {
-                "MINERU_API_KEY": "Bearer your_api_key_here"  # 替换为您的API密钥
+                "MINERU_API_KEY": "your_api_key_here"  # 替换为您的API密钥
             }
         }
     }
@@ -95,7 +95,7 @@
                 "/path/to/output"  # 可选，指定输出目录
             ],
             "env": {
-                "MINERU_API_KEY": "Bearer your_api_key_here"  # 替换为您的API密钥
+                "MINERU_API_KEY": "your_api_key_here"  # 替换为您的API密钥
             }
         }
     }

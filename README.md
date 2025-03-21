@@ -50,7 +50,7 @@ An MCP-based high-performance PDF to Markdown conversion service powered by Mine
    MINERU_API_BASE=https://mineru.net/api/v4/extract/task
    MINERU_BATCH_API=https://mineru.net/api/v4/extract/task/batch
    MINERU_BATCH_RESULTS_API=https://mineru.net/api/v4/extract-results/batch
-   MINERU_API_KEY=Bearer your_api_key_here
+   MINERU_API_KEY=your_api_key_here
    ```
 
 4. Start the service:
@@ -81,7 +81,7 @@ Add the following configuration in Claude Desktop:
                 "C:\\path\\to\\output"  # Optional, specify output directory
             ],
             "env": {
-                "MINERU_API_KEY": "Bearer your_api_key_here"  # Replace with your API key
+                "MINERU_API_KEY": "your_api_key_here"  # Replace with your API key
             }
         }
     }
@@ -103,7 +103,7 @@ Add the following configuration in Claude Desktop:
                 "/path/to/output"  # Optional, specify output directory
             ],
             "env": {
-                "MINERU_API_KEY": "Bearer your_api_key_here"  # Replace with your API key
+                "MINERU_API_KEY": "your_api_key_here"  # Replace with your API key
             }
         }
     }
