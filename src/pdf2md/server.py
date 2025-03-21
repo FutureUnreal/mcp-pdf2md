@@ -673,10 +673,162 @@ file_result = await convert_pdf_file("C:/Documents/doc2.pdf")
 """
 
 # 运行服务器
+async def serve():
+    """启动PDF到Markdown转换服务的MCP服务器"""
+    # 检查API密钥
+    if not MINERU_API_KEY:
+        logger.critical("未设置MINERU_API_KEY环境变量，服务无法正常工作")
+        return
+    
+    # 注册工具
+    @mcp.list_tools()
+    async def list_tools():
+        return [
+            {
+                "name": "convert_pdf_url",
+                "description": "将PDF URL转换为Markdown，支持单个URL或URL列表",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "url": {
+                            "type": "string",
+                            "description": "PDF文件的URL或URL列表，可以是以空格、逗号或换行符分隔的字符串"
+                        },
+                        "enable_ocr": {
+                            "type": "boolean",
+                            "description": "是否启用OCR（默认：True）"
+                        }
+                    },
+                    "required": ["url"]
+                }
+            },
+            {
+                "name": "convert_pdf_file",
+                "description": "将本地PDF文件转换为Markdown，支持单个文件或文件列表",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "file_path": {
+                            "type": "string",
+                            "description": "PDF文件的本地路径或路径列表，可以是以空格、逗号或换行符分隔的字符串"
+                        },
+                        "enable_ocr": {
+                            "type": "boolean",
+                            "description": "是否启用OCR（默认：True）"
+                        }
+                    },
+                    "required": ["file_path"]
+                }
+            }
+        ]
+    
+    # 注册资源
+    @mcp.list_resources()
+    async def list_resources():
+        return [
+            {
+                "name": "api_status",
+                "description": "API状态信息",
+                "uri": "api_status"
+            },
+            {
+                "name": "usage_help",
+                "description": "工具使用帮助信息",
+                "uri": "usage_help"
+            }
+        ]
+    
+    # 注册提示
+    @mcp.list_prompts()
+    async def list_prompts():
+        return [
+            {
+                "name": "default",
+                "description": "默认工具使用提示",
+                "uri": "default"
+            },
+            {
+                "name": "pdf",
+                "description": "PDF处理提示",
+                "uri": "pdf/{path}",
+                "parameters": {
+                    "path": {
+                        "description": "PDF文件路径"
+                    }
+                }
+            }
+        ]
+    
+    # 处理工具调用
+    @mcp.call_tool()
+    async def call_tool(name, arguments):
+        try:
+            if name == "convert_pdf_url":
+                url = arguments.get("url", "")
+                enable_ocr = arguments.get("enable_ocr", True)
+                result = await convert_pdf_url(url, enable_ocr)
+                return {"type": "text", "text": json.dumps(result, indent=2, ensure_ascii=False)}
+            
+            elif name == "convert_pdf_file":
+                file_path = arguments.get("file_path", "")
+                enable_ocr = arguments.get("enable_ocr", True)
+                result = await convert_pdf_file(file_path, enable_ocr)
+                return {"type": "text", "text": json.dumps(result, indent=2, ensure_ascii=False)}
+            
+            else:
+                return {"type": "text", "text": f"未知工具: {name}"}
+        
+        except Exception as e:
+            logger.error(f"工具调用错误: {str(e)}")
+            return {"type": "text", "text": f"错误: {str(e)}"}
+    
+    # 获取资源
+    @mcp.get_resource()
+    async def get_resource(uri, parameters):
+        try:
+            if uri == "api_status":
+                result = get_api_status()
+                return {"type": "text", "text": json.dumps(result, indent=2, ensure_ascii=False)}
+            
+            elif uri == "usage_help":
+                result = get_usage_help()
+                return {"type": "text", "text": result}
+            
+            else:
+                return {"type": "text", "text": f"未知资源: {uri}"}
+        
+        except Exception as e:
+            logger.error(f"获取资源错误: {str(e)}")
+            return {"type": "text", "text": f"错误: {str(e)}"}
+    
+    # 获取提示
+    @mcp.get_prompt()
+    async def get_prompt(uri, parameters):
+        try:
+            if uri == "default":
+                result = default_prompt()
+                return {"type": "text", "text": result}
+            
+            elif uri.startswith("pdf/"):
+                path = parameters.get("path", "")
+                result = pdf_prompt(path)
+                return {"type": "text", "text": result}
+            
+            else:
+                return {"type": "text", "text": f"未知提示: {uri}"}
+        
+        except Exception as e:
+            logger.error(f"获取提示错误: {str(e)}")
+            return {"type": "text", "text": f"错误: {str(e)}"}
+    
+    # 启动服务器
+    options = mcp.create_initialization_options()
+    await mcp.run(options)
+
+
 if __name__ == "__main__":
     # 检查API密钥
     if not MINERU_API_KEY:
-        logger.warning("警告: 未设置API密钥，请设置环境变量MINERU_API_KEY")
-    
-    # 运行MCP服务器
-    mcp.run()
+        logger.critical("未设置MINERU_API_KEY环境变量，服务无法正常工作")
+    else:
+        asyncio.run(serve())
