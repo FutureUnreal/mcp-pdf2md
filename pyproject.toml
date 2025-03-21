@@ -1,7 +1,7 @@
 [project]
 name = "pdf2md"
 version = "0.1.0"
-description = "PDF转Markdown MCP服务器"
+description = "PDF to Markdown MCP服务器"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -24,3 +24,6 @@ pdf2md = "pdf2md:main"
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pdf2md"]
