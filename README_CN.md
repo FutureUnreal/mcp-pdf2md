@@ -1,4 +1,4 @@
-# PDF2MD 服务
+# MCP-PDF2MD 服务
 
 基于MCP协议的高性能PDF转Markdown服务，由MinerU API提供支持，支持批量处理本地文件和URL链接，提供结构化输出。
 

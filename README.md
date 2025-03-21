@@ -1,8 +1,8 @@
-# PDF2MD
+# MCP-PDF2MD
 
 [English](#pdf2md-service) | [中文](README_CN.md)
 
-# PDF2MD Service
+# MCP-PDF2MD Service
 
 An MCP-based high-performance PDF to Markdown conversion service powered by MinerU API, supporting batch processing for local files and URL links with structured output.
 
