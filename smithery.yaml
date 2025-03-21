@@ -1,0 +1,29 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - mineruApiKey
+    properties:
+      mineruApiKey:
+        type: string
+        description: API key for MinerU. Must be provided as a Bearer token without the
+          'Bearer ' prefix.
+      outputDir:
+        type: string
+        default: ./downloads
+        description: Directory where the converted markdown files will be stored.
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({
+      command: 'python',
+      args: ['-m', 'pdf2md', '--output-dir', config.outputDir],
+      env: { MINERU_API_KEY: config.mineruApiKey }
+    })
+  exampleConfig:
+    mineruApiKey: your_mineru_api_key_here
+    outputDir: ./downloads
