@@ -21,7 +21,7 @@ startCommand:
     |-
     (config) => ({
       command: 'python',
-      args: ['-m', 'pdf2md', '--output-dir', config.outputDir],
+      args: ['-m', './src/pdf2md', '--output-dir', config.outputDir],
       env: { MINERU_API_KEY: config.mineruApiKey }
     })
   exampleConfig:

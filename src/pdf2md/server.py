@@ -41,7 +41,8 @@ HEADERS = {
 def set_output_dir(output_dir: str):
     """Set the output directory path"""
     global OUTPUT_DIR
-    OUTPUT_DIR = output_dir
+    # Normalize path to handle Unicode characters properly
+    OUTPUT_DIR = os.path.normpath(output_dir)
 
 def print_task_status(extract_results):
     """
@@ -187,7 +188,9 @@ async def download_zip_file(client, zip_url, file_name, prefix="md", max_retries
                 current_date = time.strftime("%Y%m%d")
                 
                 base_name = os.path.splitext(file_name)[0]
-                safe_name = re.sub(r'[^\w\s-]', '', base_name).strip()
+                # Only remove control characters and chars that are invalid in filenames
+                safe_name = re.sub(r'[<>:"/\\|?*\x00-\x1f]', '', base_name).strip()
+                # Replace spaces with underscores
                 safe_name = re.sub(r'\s+', '_', safe_name)
                 
                 if safe_name.isdigit() or re.match(r'^\d+\.\d+$', safe_name):
@@ -197,7 +200,11 @@ async def download_zip_file(client, zip_url, file_name, prefix="md", max_retries
                 
                 download_dir = Path(OUTPUT_DIR)
                 if not download_dir.exists():
-                    download_dir.mkdir(parents=True)
+                    try:
+                        download_dir.mkdir(parents=True, exist_ok=True)
+                    except Exception as e:
+                        print(f"Error creating directory: {e}")
+                        return None
                 
                 save_path = download_dir / zip_filename
                 
@@ -387,7 +394,7 @@ async def convert_pdf_url(url: str, enable_ocr: bool = True) -> Dict[str, Any]:
 @mcp.tool()  
 async def convert_pdf_file(file_path: str, enable_ocr: bool = True) -> Dict[str, Any]:
     """
-    Convert local PDF file to Markdown, supports single or multiple file paths
+    Convert local PDF file to Markdown, supports single file or file list
     
     Args:
         file_path: PDF file local path or path list, can be separated by spaces, commas, or newlines
@@ -602,25 +609,8 @@ C:/Documents/doc2.pdf
 Successful conversion returns a dictionary containing conversion result information, and the converted Markdown files will be saved in the specified output directory, with temporary downloaded ZIP files automatically deleted after unzipping to save space.
 """
 
-async def main():
-    """Run the MCP server for PDF to Markdown conversion."""
-    import argparse
-    
-    # Parse command line arguments
-    parser = argparse.ArgumentParser(description="PDF to Markdown Conversion Service")
-    parser.add_argument("--output-dir", default="./downloads", help="Specify output directory path, default is ./downloads")
-    args = parser.parse_args()
-    
-    # Set output directory
-    set_output_dir(args.output_dir)
-    
-    # Check API key
-    if not MINERU_API_KEY:
-        logger.warning("Warning: API key not set, please set the MINERU_API_KEY environment variable")
-    
-    # Run MCP server
-    mcp.run()
-
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    if not MINERU_API_KEY:
+        print("Warning: API key not set, please set environment variable MINERU_API_KEY")
+    
+    mcp.run()
