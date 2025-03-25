@@ -18,4 +18,4 @@ RUN pip install -e .
 # Expose any necessary ports if applicable (none required for stdio based MCP)
 
 # Default command to run the MCP server using python module entrypoint
-CMD ["python", "-m", "pdf2md"]
+CMD ["python", "-m", "./src/pdf2md"]
